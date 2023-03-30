@@ -12,6 +12,7 @@ const upload = multer({
     fileFilter : (req,file,callback) =>{
         callback(null,imageMimeTypes.includes(file.mimetype))
     }
+    // limits:{fieldSize: 25 * 1024 * 1024}
 })
 //All Books Route
 router.get('/', async (req, res) => {
@@ -105,7 +106,8 @@ async function renderNewPage(res,book,hasError = false){
         if(hasError) params.errorMessage = 'Eror Creating A book'
         res.render('books/new', params)
        }
-      catch{
+      catch (err){
+        console.log(err);
         res.redirect('books')
       }
 }
